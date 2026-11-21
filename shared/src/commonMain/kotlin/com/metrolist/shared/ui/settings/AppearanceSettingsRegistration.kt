@@ -88,6 +88,13 @@ internal fun SettingsUiRegistryBuilder.registerAppearanceSettings(host: SharedSe
         subtitle = stringResource(Res.string.settings_appearance_overview),
     ) {
         group("theme", stringResource(Res.string.appearance_theme)) {
+            switch(
+                id = "lowEndDeviceMode",
+                title = stringResource(Res.string.low_end_device_mode),
+                description = stringResource(Res.string.low_end_device_mode_description),
+                checked = settings.lowEndDeviceMode,
+                icon = MetrolistIcons.Outlined.PhoneAndroid,
+            ) { settings.lowEndDeviceMode = it }
             choice(
                 id = "themeMode",
                 title = stringResource(Res.string.theme_mode),

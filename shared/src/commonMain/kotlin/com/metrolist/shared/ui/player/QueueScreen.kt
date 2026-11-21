@@ -179,6 +179,7 @@ import com.metrolist.shared.ui.theme.rememberReducedMotion
 import com.metrolist.shared.ui.tv.TvReorderScrollTarget
 import com.metrolist.shared.ui.tv.tvFocusHighlight
 import com.metrolist.shared.ui.utils.DragScrollableColumn
+import com.metrolist.shared.ui.utils.fadingEdge
 import com.metrolist.shared.ui.utils.queueVerticalBlur
 import com.metrolist.shared.utils.Logger
 import com.metrolist.shared.utils.formatQueueDuration
@@ -644,10 +645,16 @@ fun QueueScreen(
                             Modifier.fillMaxSize()
                         }
                     val listModifier =
-                        baseListModifier.queueVerticalBlur(
-                            blurHeight = 95.dp + navigationBarBottomPadding,
-                            enabled = !isTv && !hasSelection,
-                        )
+                        if (Settings.shared.lowEndDeviceMode) {
+                            baseListModifier.fadingEdge(
+                                bottom = 95.dp + navigationBarBottomPadding,
+                            )
+                        } else {
+                            baseListModifier.queueVerticalBlur(
+                                blurHeight = 95.dp + navigationBarBottomPadding,
+                                enabled = !isTv && !hasSelection,
+                            )
+                        }
 
                     DragScrollableColumn(
                         state = lazyListState,

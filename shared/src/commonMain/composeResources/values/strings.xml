@@ -5532,4 +5532,6 @@
     <string name="ai_setup_privacy_settings">Open privacy settings</string>
     <string name="ai_setup_sign_in_again">Sign in again</string>
     <string name="ai_setup_key_limits">Review key limits</string>
+    <string name="low_end_device_mode">Low End Device Mode</string>
+    <string name="low_end_device_mode_description">This option makes it so when enabled, it replaces some blur effects with a simple fade to save on resources.</string>
 </resources>

@@ -37,6 +37,7 @@ val ArtistNameAliasesJsonKey = "artistNameAliasesJson"
 val PreferWordSyncedLyricsKey = "preferWordSyncedLyrics"
 
 val EnableHapticFeedbackKey = "enableHapticFeedback"
+val LowEndDeviceModeKey = "lowEndDeviceMode"
 val AppIconKey = "appIcon"
 val AutoPureBlackKey = "autoPureBlack"
 val MatugenThemeKey = "matugenTheme"

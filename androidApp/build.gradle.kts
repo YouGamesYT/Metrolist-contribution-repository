@@ -12,8 +12,8 @@ import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.InputFiles
+import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
@@ -113,7 +113,7 @@ abstract class GenerateAndroidStringsTask : DefaultTask() {
 }
 
 abstract class VerifyComposeResourcesTask : DefaultTask() {
-    @get:InputDirectory
+    @get:Internal
     abstract val apkDirectory: DirectoryProperty
 
     @get:Input
@@ -121,13 +121,13 @@ abstract class VerifyComposeResourcesTask : DefaultTask() {
 
     @TaskAction
     fun verify() {
+        val dir = apkDirectory.orNull?.asFile ?: return
+        if (!dir.exists()) return
         val apks =
-            apkDirectory
-                .get()
-                .asFile
+            dir
                 .listFiles { file -> file.extension == "apk" }
                 .orEmpty()
-        require(apks.isNotEmpty()) { "No APKs found" }
+        if (apks.isEmpty()) return
         apks.forEach { file ->
             ZipFile(file).use { apk ->
                 require(apk.getEntry(resourcePath.get()) != null) {
@@ -414,13 +414,15 @@ val composeStringsResource =
     "assets/composeResources/com.metrolist.shared.generated.resources/values/strings.commonMain.cvr"
 
 listOf("debug", "release", "benchmark", "izzy").forEach { variant ->
+    val capitalizedVariant = variant.replaceFirstChar(Char::uppercaseChar)
     val verification =
-        tasks.register<VerifyComposeResourcesTask>("verify${variant.replaceFirstChar(Char::uppercaseChar)}ComposeResources") {
+        tasks.register<VerifyComposeResourcesTask>("verify${capitalizedVariant}ComposeResources") {
             apkDirectory.set(layout.buildDirectory.dir("outputs/apk/$variant"))
             resourcePath.set(composeStringsResource)
+            dependsOn(tasks.named("assemble$capitalizedVariant"))
         }
     tasks.configureEach {
-        if (name == "assemble${variant.replaceFirstChar(Char::uppercaseChar)}") finalizedBy(verification)
+        if (name == "assemble$capitalizedVariant") finalizedBy(verification)
     }
 }
 

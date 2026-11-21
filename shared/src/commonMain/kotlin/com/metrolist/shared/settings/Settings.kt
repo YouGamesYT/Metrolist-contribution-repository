@@ -67,6 +67,7 @@ import com.metrolist.shared.constants.DownloadQueueJsonKey
 import com.metrolist.shared.constants.DownloadedCollectionSortDirectionKey
 import com.metrolist.shared.constants.DownloadedCollectionSortKey
 import com.metrolist.shared.constants.EnableHapticFeedbackKey
+import com.metrolist.shared.constants.LowEndDeviceModeKey
 import com.metrolist.shared.constants.EnableLandscapeScalingKey
 import com.metrolist.shared.constants.EqualizerActiveProfileIdKey
 import com.metrolist.shared.constants.EqualizerCurrentProfileJsonKey
@@ -336,6 +337,7 @@ class Settings(
     var animatedGradient by preference(true)
     var appIcon by preference(AppIconKey, "ORIGINAL")
     var enableHapticFeedback by preference(EnableHapticFeedbackKey, true)
+    var lowEndDeviceMode by preference(LowEndDeviceModeKey, false)
 
     var appLayout by preference(AppLayout.EXPRESS)
     var showMiniplayer by preference(false)

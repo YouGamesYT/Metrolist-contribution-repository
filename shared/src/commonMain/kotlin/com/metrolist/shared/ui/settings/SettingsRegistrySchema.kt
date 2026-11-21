@@ -167,6 +167,7 @@ data class SettingsItemRegistration(
     val control: SettingsControl,
     val enabled: Boolean = true,
     val checked: Boolean? = null,
+    val icon: ImageVector? = null,
     val valueLabel: String? = null,
     val choices: List<SettingsChoice> = emptyList(),
     val selectedChoiceId: String? = null,
@@ -270,6 +271,7 @@ class SettingsGroupRegistryBuilder internal constructor(
         description: String? = null,
         checked: Boolean,
         enabled: Boolean = true,
+        icon: ImageVector? = null,
         annotatedDescription: AnnotatedString? = null,
         onCheckedChange: (Boolean) -> Unit,
     ) {
@@ -281,6 +283,7 @@ class SettingsGroupRegistryBuilder internal constructor(
                 control = SettingsControl.SWITCH,
                 enabled = enabled,
                 checked = checked,
+                icon = icon,
                 annotatedDescription = annotatedDescription,
                 onCheckedChange = onCheckedChange,
             )
